@@ -5,15 +5,21 @@ PlayerGameAddState PlayerGameAddReducer(
     PlayerGameAddState state, dynamic action) {
   if (action is PlayerGameAddChangeValue) {
     return state.SetValue(
-        playerName1: action.playerName1,
-        playerName2: action.playerName2,
-        playerName3: action.playerName3,
-        playerName4: action.playerName4,
-        playerID1: action.playerID1,
-        playerID2: action.playerID2,
-        playerID3: action.playerID3,
-        playerID4: action.playerID4,
-        costShuttlecock: action.costShuttlecock);
+        playerName1:
+            action.playerName1 == "" ? state.playerID1 : action.playerName1,
+        playerName2:
+            action.playerName2 == "" ? state.playerID2 : action.playerName2,
+        playerName3:
+            action.playerName3 == "" ? state.playerID3 : action.playerName3,
+        playerName4:
+            action.playerName4 == "" ? state.playerID4 : action.playerName4,
+        playerID1: action.playerID1 == "" ? state.playerID1 : action.playerID1,
+        playerID2: action.playerID2 == "" ? state.playerID2 : action.playerID2,
+        playerID3: action.playerID3 == "" ? state.playerID3 : action.playerID3,
+        playerID4: action.playerID4 == "" ? state.playerID4 : action.playerID4,
+        costShuttlecock: action.costShuttlecock == 0
+            ? state.costShuttlecock
+            : action.costShuttlecock);
   }
   return state;
 }

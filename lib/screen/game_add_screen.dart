@@ -72,12 +72,20 @@ class _GameAddScreenState extends State<GameAddScreen> {
                     }).toList(),
                     onChanged: (String? newValue) {},
                   ),
+                  // DropdownButton<String>(
+                  //   value: vm.playerName3 == ""
+                  //       ? vm.listPlayerModel[0].name
+                  //       : vm.playerName3,
+                  //   hint: Text("เลือกประเทศ"),
+                  //   items: ,
+                  //   onChanged: (String? newValue) {},
+                  // ),
                   SizedBox(
                     height: 30,
                   ),
                   TextField(
                     onChanged: (String value) {
-                      // betValue = value;
+                      // betValue = value;;
                     },
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(label: Text('จำนวนเงิน')),
@@ -137,15 +145,8 @@ class _GameAddScreenState extends State<GameAddScreen> {
                             }).toList(),
                             onChanged: (String? newValue) {
                               store.dispatch(PlayerGameAddChangeValue(
-                                  newValue as String,
-                                  vm.playerName2,
-                                  vm.playerName3,
-                                  vm.playerName4,
-                                  vm.playerID1,
-                                  vm.playerID2,
-                                  vm.playerID3,
-                                  vm.playerID4,
-                                  vm.costShuttlecock));
+                                playerName1: newValue as String,
+                              ));
                             },
                           ),
                           Text(
@@ -165,15 +166,8 @@ class _GameAddScreenState extends State<GameAddScreen> {
                             }).toList(),
                             onChanged: (String? newValue) {
                               store.dispatch(PlayerGameAddChangeValue(
-                                  vm.playerName1,
-                                  newValue as String,
-                                  vm.playerName3,
-                                  vm.playerName4,
-                                  vm.playerID1,
-                                  vm.playerID2,
-                                  vm.playerID3,
-                                  vm.playerID4,
-                                  vm.costShuttlecock));
+                                playerName2: newValue as String,
+                              ));
                             },
                           ),
                           Text(
@@ -193,15 +187,7 @@ class _GameAddScreenState extends State<GameAddScreen> {
                             }).toList(),
                             onChanged: (String? newValue) {
                               store.dispatch(PlayerGameAddChangeValue(
-                                  vm.playerName1,
-                                  vm.playerName2,
-                                  newValue as String,
-                                  vm.playerName4,
-                                  vm.playerID1,
-                                  vm.playerID2,
-                                  vm.playerID3,
-                                  vm.playerID4,
-                                  vm.costShuttlecock));
+                                  playerName3: newValue as String));
                             },
                           ),
                           Text(
@@ -221,15 +207,7 @@ class _GameAddScreenState extends State<GameAddScreen> {
                             }).toList(),
                             onChanged: (String? newValue) {
                               store.dispatch(PlayerGameAddChangeValue(
-                                  vm.playerName1,
-                                  vm.playerName2,
-                                  vm.playerName3,
-                                  newValue as String,
-                                  vm.playerID1,
-                                  vm.playerID2,
-                                  vm.playerID3,
-                                  vm.playerID4,
-                                  vm.costShuttlecock));
+                                  playerName4: newValue as String));
                             },
                           ),
                           SizedBox(
@@ -301,15 +279,7 @@ class _GameAddScreenState extends State<GameAddScreen> {
                                 title: Text("แพ้จ่าย"),
                                 onChanged: (val) {
                                   store.dispatch(PlayerGameAddChangeValue(
-                                      vm.playerName1,
-                                      vm.playerName2,
-                                      vm.playerName3,
-                                      vm.playerName4,
-                                      vm.playerID1,
-                                      vm.playerID2,
-                                      vm.playerID3,
-                                      vm.playerID4,
-                                      val as int));
+                                      costShuttlecock: val as int));
                                 },
                                 activeColor: Colors.black,
                                 selected: false,
@@ -320,15 +290,7 @@ class _GameAddScreenState extends State<GameAddScreen> {
                                 title: Text("หาร"),
                                 onChanged: (val) {
                                   store.dispatch(PlayerGameAddChangeValue(
-                                      vm.playerName1,
-                                      vm.playerName2,
-                                      vm.playerName3,
-                                      vm.playerName4,
-                                      vm.playerID1,
-                                      vm.playerID2,
-                                      vm.playerID3,
-                                      vm.playerID4,
-                                      val as int));
+                                      costShuttlecock: val as int));
                                 },
                                 activeColor: Colors.black,
                                 selected: true,
