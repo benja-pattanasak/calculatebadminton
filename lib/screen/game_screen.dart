@@ -10,10 +10,10 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,19 +24,7 @@ class _GameScreenState extends State<GameScreen> {
       ),
       body: SingleChildScrollView(
           child: Column(
-        children: [
-          // ListView.builder(
-          //     physics: const NeverScrollableScrollPhysics(),
-          //     shrinkWrap: true,
-          //     itemCount: listGame == null ? 0 : listGame.length,
-          //     itemBuilder: (context, index) {
-          //       return Row(
-          //         mainAxisAlignment: MainAxisAlignment.center,
-          //         children: _showListBetDetail(
-          //             listGame[index].gameID, listGame[index], index, context),
-          //       );
-          //     }),
-        ],
+        children: [],
       )),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {

@@ -27,7 +27,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
       List<PlayerModel> listPlayerModel =
           data.map((map) => PlayerModel.fromMap(map)).toList();
       final store = StoreProvider.of<AppState>(context);
-      store.dispatch(PlayerCopyWith(listPlayerModel));
+      store.dispatch(PlayerChangeValue(listPlayerModel));
     });
   }
 
@@ -120,7 +120,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
     List<PlayerModel> listPlayerModel =
         data.map((map) => PlayerModel.fromMap(map)).toList();
     final store = StoreProvider.of<AppState>(context);
-    store.dispatch(PlayerCopyWith(listPlayerModel));
+    store.dispatch(PlayerChangeValue(listPlayerModel));
   }
 
   _showDialogAddPlayer() async {

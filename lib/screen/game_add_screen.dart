@@ -24,7 +24,7 @@ class _GameAddScreenState extends State<GameAddScreen> {
         List<Map<String, Object?>> data = await PlayerRepository().getAll();
         List<PlayerModel> listPlayerModel =
             data.map((map) => PlayerModel.fromMap(map)).toList();
-        store.dispatch(PlayerCopyWith(listPlayerModel));
+        store.dispatch(PlayerChangeValue(listPlayerModel));
       }
     });
   }
@@ -45,43 +45,7 @@ class _GameAddScreenState extends State<GameAddScreen> {
                       foregroundColor: MaterialStateProperty.all(Colors.white),
                       backgroundColor: MaterialStateProperty.all(Colors.red))),
               TextButton(
-                  onPressed: () {
-                    // String betIDValidate = "";
-                    // String betValueValidate = "";
-                    // String teamValidate = "";
-                    // if (betID == null) {
-                    //   betIDValidate = "ยังไม่ได้เลือกผู้จับนอก";
-                    // }
-                    // if (betValue == null) {
-                    //   betValueValidate = "ยังไม่ใส่จำนวนเงิน";
-                    // }
-                    // if (team1ID == null) {
-                    //   teamValidate = "ยังไม่ได้เลือกเกม";
-                    // }
-                    // if (betIDValidate + betValueValidate + teamValidate != "") {
-                    //   List<String> listError = List<String>();
-                    //   listError.add(betIDValidate);
-                    //   listError.add(betValueValidate);
-                    //   listError.add(teamValidate);
-                    //   return _showAlertBox(listError);
-                    // }
-
-                    // if (mounted) {
-                    //   setState(() {
-                    //     var betTempModel = BetTempModel();
-                    //     betTempModel.betPlayerID = int.parse(betID);
-                    //     betTempModel.betPlayerName = betName;
-                    //     betTempModel.betValue = int.parse(betValue);
-                    //     betTempModel.team1ID = team1ID;
-                    //     betTempModel.team1Name = team1Name;
-                    //     betTempModel.team2ID = team2ID;
-                    //     betTempModel.team2Name = team2Name;
-                    //     listBetTempModel.add(betTempModel);
-                    //   });
-                    // }
-                    // // Navigator.of(context).pop(context);
-                    // Navigator.pop(context);
-                  },
+                  onPressed: () {},
                   child: Text('บันทึก'),
                   style: ButtonStyle(
                       foregroundColor: MaterialStateProperty.all(Colors.white),
@@ -107,7 +71,7 @@ class _GameAddScreenState extends State<GameAddScreen> {
                       );
                     }).toList(),
                     onChanged: (String? newValue) {
-                      store.dispatch(PlayerGameAddCopyWith(
+                      store.dispatch(PlayerGameAddChangeValue(
                           newValue as String,
                           vm.player2,
                           vm.player3,
@@ -115,108 +79,9 @@ class _GameAddScreenState extends State<GameAddScreen> {
                           vm.costShuttlecock));
                     },
                   ),
-                  // FindDropdown<PlayerModel>(
-                  //   label: "ผู้จับนอก",
-                  //   showSearchBox: false,
-                  //   showClearButton: false,
-                  //   dropdownItemBuilder: (context, item, isSelected) {
-                  //     return ListTile(
-                  //       leading: CircleAvatar(
-                  //           backgroundColor: Colors.white,
-                  //           child: Icon(
-                  //             MdiIcons.badminton,
-                  //             color: Colors.black,
-                  //             size: 25,
-                  //           )),
-                  //       title: Text(item.name.toString()),
-                  //       trailing: isSelected ? Icon(Icons.check) : null,
-                  //       selected: isSelected,
-                  //     );
-                  //   },
-                  //   dropdownBuilder: (BuildContext context, PlayerModel item) {
-                  //     return Container(
-                  //       decoration: BoxDecoration(
-                  //         border:
-                  //             Border.all(color: Theme.of(context).dividerColor),
-                  //         borderRadius: BorderRadius.circular(5),
-                  //         color: Colors.white,
-                  //       ),
-                  //       child: (item == null)
-                  //           ? ListTile(
-                  //               leading: CircleAvatar(
-                  //                   backgroundColor: Colors.white,
-                  //                   child: Icon(
-                  //                     MdiIcons.badminton,
-                  //                     color: Colors.black,
-                  //                     size: 25,
-                  //                   )),
-                  //               title: Text("No item selected"))
-                  //           : ListTile(
-                  //               leading: CircleAvatar(
-                  //                   backgroundImage: NetworkImage(item.name)),
-                  //               title: Text(item.name),
-                  //             ),
-                  //     );
-                  //   },
-                  //   onFind: (String filter) => getListPlayer(filter),
-                  //   onChanged: (PlayerModel player) {
-                  //     if (mounted) {
-                  //       setState(() {
-                  //         betID = player.id.toString();
-                  //         betName = player.name;
-                  //       });
-                  //     }
-                  //   },
-                  // ),
                   SizedBox(
                     height: 30,
                   ),
-                  // DropdownSearch<String>(
-                  //   dropdownSearchDecoration: InputDecoration(
-                  //     hintText: "",
-                  //     labelText: "เกม",
-                  //     helperText: '',
-                  //     contentPadding: EdgeInsets.fromLTRB(12, 12, 0, 0),
-                  //     border: OutlineInputBorder(),
-                  //   ),
-                  //   mode: Mode.MENU,
-                  //   showSelectedItems: false,
-                  //   items: ["$team1", "$team2"],
-                  //   onChanged: (String team) {
-                  //     if (mounted) {
-                  //       setState(() {
-                  //         if (team == team1) {
-                  //           team1ID = "\$" +
-                  //               playerTempModel.player1ID.toString() +
-                  //               "\$\$" +
-                  //               playerTempModel.player2ID.toString() +
-                  //               "\$";
-                  //           team1Name = team1;
-                  //           team2ID = "\$" +
-                  //               playerTempModel.player3ID.toString() +
-                  //               "\$\$" +
-                  //               playerTempModel.player4ID.toString() +
-                  //               "\$";
-                  //           team2Name = team2;
-                  //         } else {
-                  //           team1ID = "\$" +
-                  //               playerTempModel.player3ID.toString() +
-                  //               "\$\$" +
-                  //               playerTempModel.player4ID.toString() +
-                  //               "\$";
-                  //           team1Name = team2;
-                  //           team2ID = "\$" +
-                  //               playerTempModel.player1ID.toString() +
-                  //               "\$\$" +
-                  //               playerTempModel.player2ID.toString() +
-                  //               "\$";
-                  //           team2Name = team1;
-                  //         }
-                  //       });
-                  //     }
-                  //   },
-                  //   selectedItem: "",
-                  // ),
                   TextField(
                     onChanged: (String value) {
                       // betValue = value;
@@ -274,7 +139,7 @@ class _GameAddScreenState extends State<GameAddScreen> {
                               );
                             }).toList(),
                             onChanged: (String? newValue) {
-                              store.dispatch(PlayerGameAddCopyWith(
+                              store.dispatch(PlayerGameAddChangeValue(
                                   newValue as String,
                                   vm.player2,
                                   vm.player3,
@@ -298,7 +163,7 @@ class _GameAddScreenState extends State<GameAddScreen> {
                               );
                             }).toList(),
                             onChanged: (String? newValue) {
-                              store.dispatch(PlayerGameAddCopyWith(
+                              store.dispatch(PlayerGameAddChangeValue(
                                   vm.player1,
                                   newValue as String,
                                   vm.player3,
@@ -322,7 +187,7 @@ class _GameAddScreenState extends State<GameAddScreen> {
                               );
                             }).toList(),
                             onChanged: (String? newValue) {
-                              store.dispatch(PlayerGameAddCopyWith(
+                              store.dispatch(PlayerGameAddChangeValue(
                                   vm.player1,
                                   vm.player2,
                                   newValue as String,
@@ -346,7 +211,7 @@ class _GameAddScreenState extends State<GameAddScreen> {
                               );
                             }).toList(),
                             onChanged: (String? newValue) {
-                              store.dispatch(PlayerGameAddCopyWith(
+                              store.dispatch(PlayerGameAddChangeValue(
                                   vm.player1,
                                   vm.player2,
                                   vm.player3,
@@ -422,7 +287,7 @@ class _GameAddScreenState extends State<GameAddScreen> {
                                 groupValue: vm.costShuttlecock,
                                 title: Text("แพ้จ่าย"),
                                 onChanged: (val) {
-                                  store.dispatch(PlayerGameAddCopyWith(
+                                  store.dispatch(PlayerGameAddChangeValue(
                                       vm.player1,
                                       vm.player2,
                                       vm.player3,
@@ -437,7 +302,7 @@ class _GameAddScreenState extends State<GameAddScreen> {
                                 groupValue: vm.costShuttlecock,
                                 title: Text("หาร"),
                                 onChanged: (val) {
-                                  store.dispatch(PlayerGameAddCopyWith(
+                                  store.dispatch(PlayerGameAddChangeValue(
                                       vm.player1,
                                       vm.player2,
                                       vm.player3,
@@ -485,61 +350,7 @@ class _GameAddScreenState extends State<GameAddScreen> {
                 },
               ),
               Column(
-                children: [
-                  // ListView.builder(
-                  //     shrinkWrap: true,
-                  //     itemCount: listBetTempModel.length,
-                  //     itemBuilder: (context, index) {
-                  //       return Padding(
-                  //         padding:
-                  //             EdgeInsets.only(top: 8.0, left: 0.0, right: 0.0),
-                  //         child: Card(
-                  //           elevation: 8.0,
-                  //           child: ListTile(
-                  //             title: Row(
-                  //               mainAxisAlignment:
-                  //                   MainAxisAlignment.spaceBetween,
-                  //               children: <Widget>[
-                  //                 Row(
-                  //                   children: [
-                  //                     SizedBox(
-                  //                       height: 20,
-                  //                     ),
-                  //                     Text(listBetTempModel[index]
-                  //                             .betPlayerName +
-                  //                         " จับนอกคู่\n" +
-                  //                         listBetTempModel[index].team1Name +
-                  //                         "\n"
-                  //                             "จำนวน " +
-                  //                         listBetTempModel[index]
-                  //                             .betValue
-                  //                             .toString() +
-                  //                         " บาท"),
-                  //                     SizedBox(
-                  //                       height: 20,
-                  //                     )
-                  //                   ],
-                  //                 ),
-                  //                 IconButton(
-                  //                     onPressed: () {
-                  //                       if (mounted) {
-                  //                         setState(() {
-                  //                           listBetTempModel.remove(
-                  //                               listBetTempModel[index]);
-                  //                         });
-                  //                       }
-                  //                     },
-                  //                     icon: Icon(
-                  //                       Icons.delete,
-                  //                       color: Colors.red,
-                  //                     ))
-                  //               ],
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       );
-                  //     }),
-                ],
+                children: [],
               ),
               SizedBox(
                 height: 20,
@@ -555,86 +366,7 @@ class _GameAddScreenState extends State<GameAddScreen> {
                   foregroundColor:
                       MaterialStateProperty.all<Color>(Colors.white),
                 ),
-                onPressed: () async {
-                  // String typeCostShuttlecockValidate = "";
-                  // String countPlayerValidate = "";
-                  // if (typeCostShuttlecock == 0) {
-                  //   typeCostShuttlecockValidate = "ยังไม่เลือกค่าลูกแบด";
-                  // }
-                  // if (countPlayer == 0) {
-                  //   countPlayerValidate = "ยังไม่เลือกผู้เล่น";
-                  // } else {
-                  //   if (countPlayer > 4) {
-                  //     countPlayerValidate = "เลือกผู้เล่นมากกว่า 4 คน";
-                  //   }
-                  //   if (countPlayer < 4) {
-                  //     countPlayerValidate = "เลือกผู้เล่นน้อยกว่า 4 คน";
-                  //   }
-                  // }
-                  // if (typeCostShuttlecockValidate + countPlayerValidate != "") {
-                  //   List<String> listError = [];
-                  //   listError.add(typeCostShuttlecockValidate);
-                  //   listError.add(countPlayerValidate);
-                  //   return _showAlertBox(listError);
-                  // }
-                  // var game = GameModel();
-                  // game.team1ID = "\$" +
-                  //     playerTempModel.player1ID.toString() +
-                  //     "\$" +
-                  //     "\$" +
-                  //     playerTempModel.player2ID.toString() +
-                  //     "\$";
-                  // game.team2ID = "\$" +
-                  //     playerTempModel.player3ID.toString() +
-                  //     "\$" +
-                  //     "\$" +
-                  //     playerTempModel.player4ID.toString() +
-                  //     "\$";
-                  // game.team1Name = playerTempModel.player1Name +
-                  //     " คู่กับ " +
-                  //     playerTempModel.player2Name;
-                  // game.team2Name = playerTempModel.player3Name +
-                  //     " คู่กับ " +
-                  //     playerTempModel.player4Name;
-                  // game.typeCostShuttlecock = typeCostShuttlecock.toString();
-                  // game.numberShuttleCock = 1;
-                  // game.results = "0";
-                  // var gameRepository = GameRepository();
-                  // int gameID = await gameRepository.add(game);
-                  // var betDetailRepository = BetDetailRepository();
-                  // if (listBetTempModel.length > 0) {
-                  //   for (int i = 0; i < listBetTempModel.length; i++) {
-                  //     var betDetail = BetDetailModel();
-                  //     betDetail.betPlayerID = listBetTempModel[i].betPlayerID;
-                  //     betDetail.betPlayerName =
-                  //         listBetTempModel[i].betPlayerName;
-                  //     betDetail.betValue = listBetTempModel[i].betValue;
-                  //     betDetail.betTeamID = listBetTempModel[i].team1ID;
-                  //     betDetail.betTeamName = listBetTempModel[i].team1Name;
-                  //     betDetail.gameID = gameID;
-                  //     await betDetailRepository.add(betDetail);
-                  //   }
-                  //}
-
-                  //Navigator.of(context).pop(context);
-                  //Navigator.pop(context, "false");
-
-                  //Navigator.push(context,
-                  // MaterialPageRoute(builder: (context) => GameScreen()));
-                  //   .then((value) {
-                  // setState(() {});
-                  //});
-
-                  // Navigator.pop(context,
-                  //     MaterialPageRoute(builder: (context) => GameScreen()));
-                  // setState(() {
-                  //   Navigator.pop(context,
-                  //       MaterialPageRoute(builder: (context) => GameScreen()));
-                  // });
-                  // Navigator.of(context).pop(
-                  //     MaterialPageRoute(builder: (context) => GameScreen())
-                  //         .setState(() {}));
-                },
+                onPressed: () async {},
                 child: Text('เพิ่มเกม'),
               )
             ],

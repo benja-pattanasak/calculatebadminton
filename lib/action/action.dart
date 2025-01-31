@@ -5,17 +5,17 @@ class UpdateUserAction {
   UpdateUserAction(this.newName);
 }
 
-class PlayerCopyWith {
+class PlayerChangeValue {
   final List<PlayerModel> listPlayerModel;
-  PlayerCopyWith(this.listPlayerModel);
+  PlayerChangeValue(this.listPlayerModel);
 }
 
-class PlayerGameAddCopyWith {
+class PlayerGameAddChangeValue {
   final String player1;
   final String player2;
   final String player3;
   final String player4;
   final int costShuttlecock;
-  PlayerGameAddCopyWith(this.player1, this.player2, this.player3, this.player4,
-      this.costShuttlecock);
+  PlayerGameAddChangeValue(this.player1, this.player2, this.player3,
+      this.player4, this.costShuttlecock);
 }

@@ -3,7 +3,7 @@ import 'package:calculatebadminton/state/state.dart';
 
 PlayerGameAddState PlayerGameAddReducer(
     PlayerGameAddState state, dynamic action) {
-  if (action is PlayerGameAddCopyWith) {
+  if (action is PlayerGameAddChangeValue) {
     return state.copyWith(
         player1: action.player1,
         player2: action.player2,
@@ -29,7 +29,7 @@ UserState userReducer(UserState state, dynamic action) {
 }
 
 PlayerState playerReducer(PlayerState state, dynamic action) {
-  if (action is PlayerCopyWith) {
+  if (action is PlayerChangeValue) {
     return state.copyWith(listPlayerModel: action.listPlayerModel);
   }
   return state;
