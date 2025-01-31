@@ -4,11 +4,15 @@ import 'package:calculatebadminton/state/state.dart';
 PlayerGameAddState PlayerGameAddReducer(
     PlayerGameAddState state, dynamic action) {
   if (action is PlayerGameAddChangeValue) {
-    return state.copyWith(
-        player1: action.player1,
-        player2: action.player2,
-        player3: action.player3,
-        player4: action.player4,
+    return state.SetValue(
+        playerName1: action.playerName1,
+        playerName2: action.playerName2,
+        playerName3: action.playerName3,
+        playerName4: action.playerName4,
+        playerID1: action.playerID1,
+        playerID2: action.playerID2,
+        playerID3: action.playerID3,
+        playerID4: action.playerID4,
         costShuttlecock: action.costShuttlecock);
   }
   return state;

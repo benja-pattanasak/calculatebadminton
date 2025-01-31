@@ -60,9 +60,9 @@ class _GameAddScreenState extends State<GameAddScreen> {
                     style: TextStyle(fontSize: 17),
                   ),
                   DropdownButton<String>(
-                    value: vm.player1 == ""
+                    value: vm.playerName1 == ""
                         ? vm.listPlayerModel[0].name
-                        : vm.player1,
+                        : vm.playerName1,
                     hint: Text("ผู้จับนอก"),
                     items: vm.listPlayerModel.map((PlayerModel item) {
                       return DropdownMenuItem<String>(
@@ -70,14 +70,7 @@ class _GameAddScreenState extends State<GameAddScreen> {
                         child: Text(item.name),
                       );
                     }).toList(),
-                    onChanged: (String? newValue) {
-                      store.dispatch(PlayerGameAddChangeValue(
-                          newValue as String,
-                          vm.player2,
-                          vm.player3,
-                          vm.player4,
-                          vm.costShuttlecock));
-                    },
+                    onChanged: (String? newValue) {},
                   ),
                   SizedBox(
                     height: 30,
@@ -112,10 +105,14 @@ class _GameAddScreenState extends State<GameAddScreen> {
               StoreConnector<AppState, GameAddScreenViewmodel>(
                 converter: (store) => GameAddScreenViewmodel(
                     listPlayerModel: store.state.playerState.listPlayerModel,
-                    player1: store.state.playerGameAddState.player1,
-                    player2: store.state.playerGameAddState.player2,
-                    player3: store.state.playerGameAddState.player3,
-                    player4: store.state.playerGameAddState.player4,
+                    playerName1: store.state.playerGameAddState.playerName1,
+                    playerName2: store.state.playerGameAddState.playerName2,
+                    playerName3: store.state.playerGameAddState.playerName3,
+                    playerName4: store.state.playerGameAddState.playerName4,
+                    playerID1: store.state.playerGameAddState.playerID1,
+                    playerID2: store.state.playerGameAddState.playerID2,
+                    playerID3: store.state.playerGameAddState.playerID3,
+                    playerID4: store.state.playerGameAddState.playerID4,
                     costShuttlecock:
                         store.state.playerGameAddState.costShuttlecock),
                 builder: (context, vm) {
@@ -128,9 +125,9 @@ class _GameAddScreenState extends State<GameAddScreen> {
                             style: TextStyle(fontSize: 17),
                           ),
                           DropdownButton<String>(
-                            value: vm.player1 == ""
+                            value: vm.playerName1 == ""
                                 ? vm.listPlayerModel[0].name
-                                : vm.player1,
+                                : vm.playerName1,
                             hint: Text("เลือกประเทศ"),
                             items: vm.listPlayerModel.map((PlayerModel item) {
                               return DropdownMenuItem<String>(
@@ -141,9 +138,13 @@ class _GameAddScreenState extends State<GameAddScreen> {
                             onChanged: (String? newValue) {
                               store.dispatch(PlayerGameAddChangeValue(
                                   newValue as String,
-                                  vm.player2,
-                                  vm.player3,
-                                  vm.player4,
+                                  vm.playerName2,
+                                  vm.playerName3,
+                                  vm.playerName4,
+                                  vm.playerID1,
+                                  vm.playerID2,
+                                  vm.playerID3,
+                                  vm.playerID4,
                                   vm.costShuttlecock));
                             },
                           ),
@@ -152,9 +153,9 @@ class _GameAddScreenState extends State<GameAddScreen> {
                             style: TextStyle(fontSize: 17),
                           ),
                           DropdownButton<String>(
-                            value: vm.player2 == ""
+                            value: vm.playerName2 == ""
                                 ? vm.listPlayerModel[0].name
-                                : vm.player2,
+                                : vm.playerName2,
                             hint: Text("เลือกประเทศ"),
                             items: vm.listPlayerModel.map((PlayerModel item) {
                               return DropdownMenuItem<String>(
@@ -164,10 +165,14 @@ class _GameAddScreenState extends State<GameAddScreen> {
                             }).toList(),
                             onChanged: (String? newValue) {
                               store.dispatch(PlayerGameAddChangeValue(
-                                  vm.player1,
+                                  vm.playerName1,
                                   newValue as String,
-                                  vm.player3,
-                                  vm.player4,
+                                  vm.playerName3,
+                                  vm.playerName4,
+                                  vm.playerID1,
+                                  vm.playerID2,
+                                  vm.playerID3,
+                                  vm.playerID4,
                                   vm.costShuttlecock));
                             },
                           ),
@@ -176,9 +181,9 @@ class _GameAddScreenState extends State<GameAddScreen> {
                             style: TextStyle(fontSize: 17),
                           ),
                           DropdownButton<String>(
-                            value: vm.player3 == ""
+                            value: vm.playerName3 == ""
                                 ? vm.listPlayerModel[0].name
-                                : vm.player3,
+                                : vm.playerName3,
                             hint: Text("เลือกประเทศ"), // ข้อความเริ่มต้น
                             items: vm.listPlayerModel.map((PlayerModel item) {
                               return DropdownMenuItem<String>(
@@ -188,10 +193,14 @@ class _GameAddScreenState extends State<GameAddScreen> {
                             }).toList(),
                             onChanged: (String? newValue) {
                               store.dispatch(PlayerGameAddChangeValue(
-                                  vm.player1,
-                                  vm.player2,
+                                  vm.playerName1,
+                                  vm.playerName2,
                                   newValue as String,
-                                  vm.player4,
+                                  vm.playerName4,
+                                  vm.playerID1,
+                                  vm.playerID2,
+                                  vm.playerID3,
+                                  vm.playerID4,
                                   vm.costShuttlecock));
                             },
                           ),
@@ -200,9 +209,9 @@ class _GameAddScreenState extends State<GameAddScreen> {
                             style: TextStyle(fontSize: 17),
                           ),
                           DropdownButton<String>(
-                            value: vm.player4 == ""
+                            value: vm.playerName4 == ""
                                 ? vm.listPlayerModel[0].name
-                                : vm.player4,
+                                : vm.playerName4,
                             hint: Text("เลือกประเทศ"), // ข้อความเริ่มต้น
                             items: vm.listPlayerModel.map((PlayerModel item) {
                               return DropdownMenuItem<String>(
@@ -212,10 +221,14 @@ class _GameAddScreenState extends State<GameAddScreen> {
                             }).toList(),
                             onChanged: (String? newValue) {
                               store.dispatch(PlayerGameAddChangeValue(
-                                  vm.player1,
-                                  vm.player2,
-                                  vm.player3,
+                                  vm.playerName1,
+                                  vm.playerName2,
+                                  vm.playerName3,
                                   newValue as String,
+                                  vm.playerID1,
+                                  vm.playerID2,
+                                  vm.playerID3,
+                                  vm.playerID4,
                                   vm.costShuttlecock));
                             },
                           ),
@@ -226,7 +239,7 @@ class _GameAddScreenState extends State<GameAddScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                vm.player1 + " คู่กับ " + vm.player2,
+                                vm.playerName1 + " คู่กับ " + vm.playerName2,
                                 style: TextStyle(
                                     fontSize: 17, color: Colors.pinkAccent),
                               ),
@@ -251,7 +264,7 @@ class _GameAddScreenState extends State<GameAddScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                vm.player3 + " คู่กับ " + vm.player4,
+                                vm.playerName3 + " คู่กับ " + vm.playerName4,
                                 style: TextStyle(
                                     fontSize: 17, color: Colors.pinkAccent),
                               ),
@@ -288,10 +301,14 @@ class _GameAddScreenState extends State<GameAddScreen> {
                                 title: Text("แพ้จ่าย"),
                                 onChanged: (val) {
                                   store.dispatch(PlayerGameAddChangeValue(
-                                      vm.player1,
-                                      vm.player2,
-                                      vm.player3,
-                                      vm.player4,
+                                      vm.playerName1,
+                                      vm.playerName2,
+                                      vm.playerName3,
+                                      vm.playerName4,
+                                      vm.playerID1,
+                                      vm.playerID2,
+                                      vm.playerID3,
+                                      vm.playerID4,
                                       val as int));
                                 },
                                 activeColor: Colors.black,
@@ -303,10 +320,14 @@ class _GameAddScreenState extends State<GameAddScreen> {
                                 title: Text("หาร"),
                                 onChanged: (val) {
                                   store.dispatch(PlayerGameAddChangeValue(
-                                      vm.player1,
-                                      vm.player2,
-                                      vm.player3,
-                                      vm.player4,
+                                      vm.playerName1,
+                                      vm.playerName2,
+                                      vm.playerName3,
+                                      vm.playerName4,
+                                      vm.playerID1,
+                                      vm.playerID2,
+                                      vm.playerID3,
+                                      vm.playerID4,
                                       val as int));
                                 },
                                 activeColor: Colors.black,

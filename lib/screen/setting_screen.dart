@@ -1,6 +1,6 @@
 import 'package:calculatebadminton/model/setting_model.dart';
 import 'package:calculatebadminton/repository/setting_repository.dart';
-import 'package:calculatebadminton/widgets/left_navigation.dart';
+import 'package:calculatebadminton/widgets/leftnavigation.dart';
 import 'package:flutter/material.dart';
 
 class SettingScreen extends StatefulWidget {

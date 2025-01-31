@@ -10,28 +10,44 @@ class PlayerState {
 }
 
 class PlayerGameAddState {
-  final String player1;
-  final String player2;
-  final String player3;
-  final String player4;
+  final String playerName1;
+  final String playerName2;
+  final String playerName3;
+  final String playerName4;
+  final String playerID1;
+  final String playerID2;
+  final String playerID3;
+  final String playerID4;
   final int costShuttlecock;
   PlayerGameAddState(
-      {this.player1 = "",
-      this.player2 = "",
-      this.player3 = "",
-      this.player4 = "",
+      {this.playerName1 = "",
+      this.playerName2 = "",
+      this.playerName3 = "",
+      this.playerName4 = "",
+      this.playerID1 = "",
+      this.playerID2 = "",
+      this.playerID3 = "",
+      this.playerID4 = "",
       this.costShuttlecock = 0});
-  PlayerGameAddState copyWith(
-      {String? player1,
-      String? player2,
-      String? player3,
-      String? player4,
+  PlayerGameAddState SetValue(
+      {String? playerName1,
+      String? playerName2,
+      String? playerName3,
+      String? playerName4,
+      String? playerID1,
+      String? playerID2,
+      String? playerID3,
+      String? playerID4,
       int? costShuttlecock}) {
     return PlayerGameAddState(
-      player1: player1 ?? this.player1,
-      player2: player2 ?? this.player2,
-      player3: player3 ?? this.player3,
-      player4: player4 ?? this.player4,
+      playerName1: playerName1 ?? this.playerName1,
+      playerName2: playerName2 ?? this.playerName2,
+      playerName3: playerName3 ?? this.playerName3,
+      playerName4: playerName4 ?? this.playerName4,
+      playerID1: playerID1 ?? this.playerID1,
+      playerID2: playerID2 ?? this.playerID2,
+      playerID3: playerID3 ?? this.playerID3,
+      playerID4: playerID4 ?? this.playerID4,
       costShuttlecock: costShuttlecock ?? this.costShuttlecock,
     );
   }

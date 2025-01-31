@@ -1,5 +1,5 @@
 import 'package:calculatebadminton/screen/game_add_screen.dart';
-import 'package:calculatebadminton/widgets/left_navigation.dart';
+import 'package:calculatebadminton/widgets/leftnavigation.dart';
 import 'package:flutter/material.dart';
 
 class GameScreen extends StatefulWidget {

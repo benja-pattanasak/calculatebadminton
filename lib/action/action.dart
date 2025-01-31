@@ -11,11 +11,23 @@ class PlayerChangeValue {
 }
 
 class PlayerGameAddChangeValue {
-  final String player1;
-  final String player2;
-  final String player3;
-  final String player4;
+  final String playerName1;
+  final String playerName2;
+  final String playerName3;
+  final String playerName4;
+  final String playerID1;
+  final String playerID2;
+  final String playerID3;
+  final String playerID4;
   final int costShuttlecock;
-  PlayerGameAddChangeValue(this.player1, this.player2, this.player3,
-      this.player4, this.costShuttlecock);
+  PlayerGameAddChangeValue(
+      this.playerName1,
+      this.playerName2,
+      this.playerName3,
+      this.playerName4,
+      this.playerID1,
+      this.playerID2,
+      this.playerID3,
+      this.playerID4,
+      this.costShuttlecock);
 }

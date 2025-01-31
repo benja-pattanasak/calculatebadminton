@@ -12,7 +12,14 @@ void main() {
         userState: UserState(name: "Test"),
         playerState: PlayerState(listPlayerModel: List.empty()),
         playerGameAddState: PlayerGameAddState(
-            player1: "", player2: "", player3: "", player4: "")),
+            playerName1: "",
+            playerName2: "",
+            playerName3: "",
+            playerName4: "",
+            playerID1: "",
+            playerID2: "",
+            playerID3: "",
+            playerID4: "")),
   );
   runApp(SplashScreen(store: store));
 }
