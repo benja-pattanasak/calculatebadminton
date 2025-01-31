@@ -1,6 +1,7 @@
-import 'package:calculatebadminton/main.dart';
+import 'package:calculatebadminton/action/action.dart';
 import 'package:calculatebadminton/model/player_model.dart';
 import 'package:calculatebadminton/repository/player_repository.dart';
+import 'package:calculatebadminton/state/state.dart';
 import 'package:calculatebadminton/viewmodel/playerscreen_viewmodel.dart';
 import 'package:calculatebadminton/widgets/left_navigation.dart';
 import 'package:calculatebadminton/widgets/show_alertbox.dart';
@@ -47,7 +48,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                   onPressed: () async {
                     if (_editPlayerNameController.text == "") {
                       ShowAlertBox showAlertBox = ShowAlertBox();
-                      return showAlertBox.ShowError(
+                      return showAlertBox.showError(
                           context, "1.ยังไม่ได้ใส่ชื่อผู้เล่น");
                     }
                     PlayerModel playerModel = PlayerModel(

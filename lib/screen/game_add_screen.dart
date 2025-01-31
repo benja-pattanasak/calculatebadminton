@@ -1,6 +1,7 @@
-import 'package:calculatebadminton/main.dart';
+import 'package:calculatebadminton/action/action.dart';
 import 'package:calculatebadminton/model/player_model.dart';
 import 'package:calculatebadminton/repository/player_repository.dart';
+import 'package:calculatebadminton/state/state.dart';
 import 'package:calculatebadminton/viewmodel/gameaddscreen_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';

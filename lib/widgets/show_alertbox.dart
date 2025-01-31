@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ShowAlertBox {
-  ShowError(context, String errorMessage) {
+  showError(context, String errorMessage) {
     return showDialog(
         context: context,
         barrierDismissible: true,
