@@ -69,7 +69,11 @@ class _PlayerScreenState extends State<PlayerScreen> {
                       foregroundColor: MaterialStateProperty.all(Colors.white),
                       backgroundColor: MaterialStateProperty.all(Colors.blue)))
             ],
-            title: Text('แก้ไขผู้เล่น'),
+            title: Text('แก้ไขผู้เล่น',
+                style: TextStyle(
+                  color: Colors.green,
+                  fontSize: 20,
+                )),
             content: SingleChildScrollView(
               child: Column(
                 children: [
@@ -157,34 +161,49 @@ class _PlayerScreenState extends State<PlayerScreen> {
                         SizedBox(
                           height: 50,
                         ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor: Colors.pinkAccent),
-                          onPressed: () async {
-                            PlayerRepository playerRepository =
-                                PlayerRepository();
-                            PlayerModel playerModel =
-                                PlayerModel(id: 0, name: "");
-                            List<Map> maxIdMap =
-                                await playerRepository.getMaxId();
-                            maxIdMap.forEach((player) {
-                              playerModel.id = player['id'] == null
-                                  ? 1
-                                  : (player['id'] as int) + 1;
-                            });
+                        Row(
+                          children: [
+                            TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text('ยกเลิก'),
+                                style: ButtonStyle(
+                                    foregroundColor:
+                                        MaterialStateProperty.all(Colors.white),
+                                    backgroundColor:
+                                        MaterialStateProperty.all(Colors.red))),
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                  foregroundColor: Colors.white,
+                                  backgroundColor: Colors.blue),
+                              onPressed: () async {
+                                PlayerRepository playerRepository =
+                                    PlayerRepository();
+                                PlayerModel playerModel =
+                                    PlayerModel(id: 0, name: "");
+                                List<Map> maxIdMap =
+                                    await playerRepository.getMaxId();
+                                maxIdMap.forEach((player) {
+                                  playerModel.id = player['id'] == null
+                                      ? 1
+                                      : (player['id'] as int) + 1;
+                                });
 
-                            playerModel.id = playerModel.id;
-                            playerModel.name = _playerNameController.text;
+                                playerModel.id = playerModel.id;
+                                playerModel.name = _playerNameController.text;
+                                if (playerModel.name == "") {
+                                  return ShowAlertBox().showError(
+                                      context, "กรุณาใส่ชื่อผู้เล่น");
+                                }
+                                await playerRepository.add(playerModel);
+                                Navigator.pop(context);
 
-                            await playerRepository.add(playerModel);
-                            Navigator.pop(context);
-
-                            await _getListPlayer(context);
-                            Snackbar.show(context, "เพิ่มผู้เล่นเรียบร้อย");
-                          },
-                          child: Text('บันทึก'),
-                        )
+                                await _getListPlayer(context);
+                                Snackbar.show(context, "เพิ่มผู้เล่นเรียบร้อย");
+                              },
+                              child: Text('บันทึก'),
+                            )
+                          ],
+                        ),
                       ],
                     ),
                   ))

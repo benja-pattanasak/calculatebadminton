@@ -1,4 +1,10 @@
+import 'package:calculatebadminton/model/betdetail_model.dart';
 import 'package:calculatebadminton/model/player_model.dart';
+
+class BetDetailChangeValue {
+  List<BetDetailModel>? listBetDetailModel;
+  BetDetailChangeValue({this.listBetDetailModel});
+}
 
 class UpdateUserAction {
   final String newName;
@@ -19,7 +25,16 @@ class PlayerGameAddChangeValue {
   final String? playerID2;
   final String? playerID3;
   final String? playerID4;
+  final String? betID;
+  final String? betName;
   final int? costShuttlecock;
+  final String? betTeam1ID;
+  final String? betTeam1Name;
+  final String? betTeam2ID;
+  final String? betTeam2Name;
+  final String? betTeamID;
+  final String? betTeamName;
+  final int? betAmount;
   PlayerGameAddChangeValue(
       {this.playerName1,
       this.playerName2,
@@ -29,5 +44,14 @@ class PlayerGameAddChangeValue {
       this.playerID2,
       this.playerID3,
       this.playerID4,
-      this.costShuttlecock});
+      this.betID,
+      this.betName,
+      this.costShuttlecock,
+      this.betTeam1ID,
+      this.betTeam1Name,
+      this.betTeam2ID,
+      this.betTeam2Name,
+      this.betTeamID,
+      this.betTeamName,
+      this.betAmount});
 }
