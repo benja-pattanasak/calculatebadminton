@@ -1,6 +1,6 @@
 import 'package:calculatebadminton/repository/betdetail_repository.dart';
 import 'package:calculatebadminton/repository/game_repository.dart';
-import 'package:calculatebadminton/widgets/left_navigation.dart';
+import 'package:calculatebadminton/widgets/leftnavigation.dart';
 import 'package:flutter/material.dart';
 
 class CleardataScreen extends StatefulWidget {
