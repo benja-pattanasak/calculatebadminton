@@ -60,4 +60,9 @@ class GameRepository {
         gameID.toString();
     return await _repository.getListByRawQeury(sql);
   }
+
+  getMaxId() async {
+    Repository repository = Repository();
+    return await repository.getListByRawQeury('SELECT MAX(id) as id FROM game');
+  }
 }

@@ -1,7 +1,9 @@
 import 'package:calculatebadminton/action/action.dart';
 import 'package:calculatebadminton/model/betdetail_model.dart';
+import 'package:calculatebadminton/model/game_model.dart';
 import 'package:calculatebadminton/model/player_model.dart';
 import 'package:calculatebadminton/repository/betdetail_repository.dart';
+import 'package:calculatebadminton/repository/game_repository.dart';
 import 'package:calculatebadminton/repository/player_repository.dart';
 import 'package:calculatebadminton/state/state.dart';
 import 'package:calculatebadminton/viewmodel/gameaddscreen_viewmodel.dart';
@@ -30,11 +32,25 @@ class _GameAddScreenState extends State<GameAddScreen> {
             data.map((map) => PlayerModel.fromMap(map)).toList();
         store.dispatch(PlayerChangeValue(listPlayerModel));
       }
+      store.dispatch(PlayerGameAddClearValue());
     });
   }
 
-  _showFormBet() {
-    final store = StoreProvider.of<AppState>(context, listen: false);
+  _load() async {
+    List<Map<String, Object?>> data = await GameRepository().getAll();
+    List<GameModel> listGameModel =
+        data.map((map) => GameModel.fromMap(map)).toList();
+    final store = StoreProvider.of<AppState>(context);
+    store.dispatch(GameChangeValue(listGameModel: listGameModel));
+
+    data = await BetDetailRepository().getAll();
+    List<BetDetailModel> listBetDetailModel =
+        data.map((map) => BetDetailModel.fromMap(map)).toList();
+    store
+        .dispatch(BetDetailChangeValue(listBetDetailModel: listBetDetailModel));
+  }
+
+  _showFormBet(Store<AppState> store) {
     return showDialog(
         useSafeArea: false,
         context: context,
@@ -205,6 +221,26 @@ class _GameAddScreenState extends State<GameAddScreen> {
           betTeam1Name: vm.playerName1 + " คู่กับ " + vm.playerName2,
           betTeam2Name: vm.playerName3 + " คู่กับ " + vm.playerName4));
     }
+  }
+
+  List<Widget> _Validate(GameAddScreenViewmodel vm) {
+    List<Widget> listErrorWidget = [];
+    if (vm.playerID1 == "") {
+      listErrorWidget.add(Text("กรุณาเลือกผู้เล่นที่ 1"));
+    }
+    if (vm.playerID2 == "") {
+      listErrorWidget.add(Text("กรุณาเลือกผู้เล่นที่ 2"));
+    }
+    if (vm.playerID3 == "") {
+      listErrorWidget.add(Text("กรุณาเลือกผู้เล่นที่ 3"));
+    }
+    if (vm.playerID4 == "") {
+      listErrorWidget.add(Text("กรุณาเลือกผู้เล่นที่ 4"));
+    }
+    if (vm.costShuttlecock == 0) {
+      listErrorWidget.add(Text("กรุณาเลือกประเภทค่าลูกแบด"));
+    }
+    return listErrorWidget;
   }
 
   @override
@@ -480,7 +516,7 @@ class _GameAddScreenState extends State<GameAddScreen> {
                                         context, "กรุณาเลือกผู้เล่นที่ 4");
                                     return;
                                   }
-                                  _showFormBet();
+                                  _showFormBet(store);
                                 },
                                 child: Text('เพิ่มจับนอก'),
                               )
@@ -513,12 +549,14 @@ class _GameAddScreenState extends State<GameAddScreen> {
                                                   Text(vm
                                                           .listBetDetailModel[
                                                               index]
-                                                          .betPlayerName +
+                                                          .betPlayerName
+                                                          .toString() +
                                                       " จับนอกคู่\n" +
                                                       vm
                                                           .listBetDetailModel[
                                                               index]
-                                                          .betTeamName +
+                                                          .betTeamName
+                                                          .toString() +
                                                       "\n"
                                                           "จำนวน " +
                                                       vm
@@ -553,32 +591,96 @@ class _GameAddScreenState extends State<GameAddScreen> {
                                   }),
                             ],
                           ),
+                          Column(
+                            children: [],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Divider(
+                            height: 20,
+                            thickness: 2,
+                          ),
+                          TextButton(
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all<Color>(Colors.blue),
+                              foregroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.white),
+                            ),
+                            onPressed: () async {
+                              List<Widget> listErrorWidget = _Validate(vm);
+                              if (listErrorWidget.length > 0) {
+                                ShowAlertBox().showErrorWithAddErrorWidgert(
+                                    context,
+                                    listErrorWidget,
+                                    "พบข้อผิดพลาดดังนี้");
+                              } else {
+                                GameRepository gameRepository =
+                                    GameRepository();
+                                GameModel gameModel = GameModel();
+                                gameModel.numberShuttleCock = 0;
+                                List<Map> maxIdMap =
+                                    await gameRepository.getMaxId();
+                                maxIdMap.forEach((game) {
+                                  gameModel.gameID = game['id'] == null
+                                      ? 1
+                                      : (game['id'] as int) + 1;
+                                });
+                                gameModel.numberShuttleCock = 1;
+                                gameModel.results = "0";
+                                gameModel.team1ID = vm.betTeam1ID;
+                                gameModel.team1Name = vm.betTeam1Name;
+                                gameModel.team2ID = vm.betTeam2ID;
+                                gameModel.team2Name = vm.betTeam2Name;
+                                gameModel.typeCostShuttlecock =
+                                    vm.costShuttlecock.toString();
+                                gameRepository.add(gameModel);
+                                BetDetailRepository betDetailRepository =
+                                    BetDetailRepository();
+                                vm.listBetDetailModel
+                                    .forEach((_betDetailModel) async {
+                                  BetDetailModel betDetailModel =
+                                      BetDetailModel();
+                                  maxIdMap =
+                                      await betDetailRepository.getMaxId();
+                                  maxIdMap.forEach((betDetail) {
+                                    betDetailModel.id = betDetail['id'] == null
+                                        ? 1
+                                        : (betDetail['id'] as int) + 1;
+                                  });
+                                  betDetailModel.betPlayerID =
+                                      _betDetailModel.betPlayerID;
+                                  betDetailModel.betPlayerName =
+                                      _betDetailModel.betPlayerName;
+                                  betDetailModel.betTeamID =
+                                      _betDetailModel.betTeamID;
+                                  betDetailModel.betTeamName =
+                                      _betDetailModel.betTeamName;
+                                  betDetailModel.betValue =
+                                      _betDetailModel.betValue;
+                                  betDetailModel.gameID =
+                                      gameModel.gameID as int;
+                                  betDetailRepository.add(betDetailModel);
+                                });
+                                vm.listBetDetailModel.clear();
+                                store.dispatch(BetDetailChangeValue(
+                                  listBetDetailModel: vm.listBetDetailModel,
+                                ));
+                                vm.listPlayerModel.clear();
+
+                                await _load();
+                                Navigator.pop(context);
+                              }
+                            },
+                            child: Text('เพิ่มเกม'),
+                          )
                         ]);
                   } else {
                     return Text("ยังไม่ได้เพิ่มผู้เล่น");
                   }
                 },
               ),
-              Column(
-                children: [],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Divider(
-                height: 20,
-                thickness: 2,
-              ),
-              TextButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.blue),
-                  foregroundColor:
-                      MaterialStateProperty.all<Color>(Colors.white),
-                ),
-                onPressed: () async {},
-                child: Text('เพิ่มเกม'),
-              )
             ],
           ),
         ),

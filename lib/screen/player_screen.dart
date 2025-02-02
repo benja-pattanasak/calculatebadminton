@@ -3,7 +3,6 @@ import 'package:calculatebadminton/model/player_model.dart';
 import 'package:calculatebadminton/repository/player_repository.dart';
 import 'package:calculatebadminton/state/state.dart';
 import 'package:calculatebadminton/viewmodel/playerscreen_viewmodel.dart';
-import 'package:calculatebadminton/widgets/leftnavigation.dart';
 import 'package:calculatebadminton/widgets/showalertbox.dart';
 import 'package:calculatebadminton/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
@@ -216,7 +215,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
   Widget build(BuildContext context) {
     var contextBase = context;
     return Scaffold(
-      drawer: LeftNavigation(),
+      //drawer: LeftNavigation(),
       appBar: AppBar(
         title: Text('ผู้เล่น', style: TextStyle(color: Colors.white)),
       ),
@@ -272,6 +271,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
+          _playerNameController.text = "";
           _showDialogAddPlayer();
         },
         icon: Icon(

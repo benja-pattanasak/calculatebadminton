@@ -1,5 +1,14 @@
 import 'package:calculatebadminton/model/betdetail_model.dart';
+import 'package:calculatebadminton/model/game_model.dart';
 import 'package:calculatebadminton/model/player_model.dart';
+
+class GameState {
+  List<GameModel> listGameModel;
+  GameState({this.listGameModel = const []});
+  GameState setValue({List<GameModel>? listGameModel}) {
+    return GameState(listGameModel: listGameModel ?? this.listGameModel);
+  }
+}
 
 class BetDetailState {
   List<BetDetailModel> listBetDetailModel;
@@ -58,6 +67,7 @@ class PlayerGameAddState {
     this.betTeamName = "",
     this.betAmount = 0,
   });
+
   PlayerGameAddState SetValue(
       {String? playerName1,
       String? playerName2,
@@ -116,10 +126,12 @@ class AppState {
   final PlayerState playerState;
   final PlayerGameAddState playerGameAddState;
   final BetDetailState betDetailState;
+  final GameState gameState;
   AppState(
       {required this.counterState,
       required this.userState,
       required this.playerState,
       required this.playerGameAddState,
-      required this.betDetailState});
+      required this.betDetailState,
+      required this.gameState});
 }

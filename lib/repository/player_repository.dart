@@ -38,4 +38,10 @@ class PlayerRepository {
     return await repository
         .getListByRawQeury('SELECT MAX(id) as id FROM player');
   }
+
+  count() async {
+    Repository repository = Repository();
+    return await repository
+        .getListByRawQeury('SELECT COUNT(*) as count FROM player');
+  }
 }

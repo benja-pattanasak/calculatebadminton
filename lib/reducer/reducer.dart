@@ -1,6 +1,13 @@
 import 'package:calculatebadminton/action/action.dart';
 import 'package:calculatebadminton/state/state.dart';
 
+GameState GameReducer(GameState state, dynamic action) {
+  if (action is GameChangeValue) {
+    return state.setValue(listGameModel: action.listGameModel);
+  }
+  return state;
+}
+
 BetDetailState BetDetailReducer(BetDetailState state, dynamic action) {
   if (action is BetDetailChangeValue) {
     return state.setValue(listBetDetailModel: action.listBetDetailModel);
@@ -42,6 +49,27 @@ PlayerGameAddState PlayerGameAddReducer(
           action.betTeamName == "" ? state.betTeamName : action.betTeamName,
       betAmount: action.betAmount == 0 ? state.betAmount : action.betAmount,
     );
+  } else if (action is PlayerGameAddClearValue) {
+    return state.SetValue(
+      playerName1: "",
+      playerName2: "",
+      playerName3: "",
+      playerName4: "",
+      playerID1: "",
+      playerID2: "",
+      playerID3: "",
+      playerID4: "",
+      betID: "",
+      betName: "",
+      costShuttlecock: 0,
+      betTeam1ID: "",
+      betTeam1Name: "",
+      betTeam2ID: "",
+      betTeam2Name: "",
+      betTeamID: "",
+      betTeamName: "",
+      betAmount: 0,
+    );
   }
   return state;
 }
@@ -74,5 +102,6 @@ AppState appReducer(AppState state, dynamic action) {
     playerState: playerReducer(state.playerState, action),
     playerGameAddState: PlayerGameAddReducer(state.playerGameAddState, action),
     betDetailState: BetDetailReducer(state.betDetailState, action),
+    gameState: GameReducer(state.gameState, action),
   );
 }

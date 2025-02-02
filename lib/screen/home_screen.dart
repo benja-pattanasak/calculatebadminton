@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: Icon(Icons.attach_money), label: 'คิดเงิน'),
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'ตั้งค่า'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: 'เคลียข้อมูล')
+              icon: Icon(Icons.delete), label: 'เคลียข้อมูล')
         ],
       ),
     );

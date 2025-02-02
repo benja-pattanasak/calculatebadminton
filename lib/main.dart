@@ -28,6 +28,7 @@ void main() {
           betTeam2Name: "",
           costShuttlecock: 0),
       betDetailState: BetDetailState(listBetDetailModel: []),
+      gameState: GameState(listGameModel: []),
     ),
   );
   runApp(SplashScreen(store: store));

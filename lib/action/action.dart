@@ -1,5 +1,11 @@
 import 'package:calculatebadminton/model/betdetail_model.dart';
+import 'package:calculatebadminton/model/game_model.dart';
 import 'package:calculatebadminton/model/player_model.dart';
+
+class GameChangeValue {
+  List<GameModel>? listGameModel;
+  GameChangeValue({this.listGameModel});
+}
 
 class BetDetailChangeValue {
   List<BetDetailModel>? listBetDetailModel;
@@ -55,3 +61,5 @@ class PlayerGameAddChangeValue {
       this.betTeamName,
       this.betAmount});
 }
+
+class PlayerGameAddClearValue {}
