@@ -1,6 +1,33 @@
 import 'package:calculatebadminton/model/betdetail_model.dart';
 import 'package:calculatebadminton/model/game_model.dart';
+import 'package:calculatebadminton/model/payment_model.dart';
 import 'package:calculatebadminton/model/player_model.dart';
+
+class PaymentChangeValue {
+  PaymentModel? paymentModel;
+  int? gameCount;
+  String? payPlayerID;
+  String? payPlayName;
+  int? countShuttleCock;
+  int? costShuttleCock;
+  double? calculateCostShuttleCock;
+  double? costBetExpenses;
+  int? costCort;
+  double? costSumary;
+  double? costBetRevenue;
+  PaymentChangeValue(
+      {this.paymentModel,
+      this.gameCount,
+      this.payPlayerID,
+      this.payPlayName,
+      this.countShuttleCock,
+      this.costShuttleCock,
+      this.calculateCostShuttleCock,
+      this.costBetExpenses,
+      this.costCort,
+      this.costSumary,
+      this.costBetRevenue});
+}
 
 class GameChangeValue {
   List<GameModel>? listGameModel;

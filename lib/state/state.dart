@@ -1,6 +1,60 @@
 import 'package:calculatebadminton/model/betdetail_model.dart';
 import 'package:calculatebadminton/model/game_model.dart';
+import 'package:calculatebadminton/model/payment_model.dart';
 import 'package:calculatebadminton/model/player_model.dart';
+
+class PaymentState {
+  PaymentModel? paymentModel;
+  int? gameCount;
+  String? payPlayerID;
+  String? payPlayerName;
+  int? countShuttleCock;
+  int? costShuttleCock;
+  double? calculateCostShuttleCock;
+  double? costBetExpenses;
+  int? costCort;
+  double? costSumary;
+  double? costBetRevenue;
+  PaymentState(
+      {this.paymentModel,
+      this.gameCount,
+      this.payPlayerID,
+      this.payPlayerName,
+      this.countShuttleCock,
+      this.costShuttleCock,
+      this.calculateCostShuttleCock,
+      this.costBetExpenses,
+      this.costCort,
+      this.costSumary,
+      this.costBetRevenue});
+  PaymentState setValue(
+      {PaymentModel? paymentModel,
+      int? gameCount,
+      String? payPlayerID,
+      String? payPlayerName,
+      int? countShuttleCock,
+      int? costShuttleCock,
+      double? calculateCostShuttleCock,
+      double? costBetExpenses,
+      int? costCort,
+      double? costSumary,
+      double? costBetRevenue}) {
+    return PaymentState(
+      paymentModel: paymentModel ?? this.paymentModel,
+      gameCount: gameCount ?? this.gameCount,
+      payPlayerID: payPlayerID ?? this.payPlayerID,
+      payPlayerName: payPlayerName ?? this.payPlayerName,
+      countShuttleCock: countShuttleCock ?? this.countShuttleCock,
+      costShuttleCock: costShuttleCock ?? this.costShuttleCock,
+      calculateCostShuttleCock:
+          calculateCostShuttleCock ?? this.calculateCostShuttleCock,
+      costBetExpenses: costBetExpenses ?? this.costBetExpenses,
+      costCort: costCort ?? this.costCort,
+      costSumary: costSumary ?? this.costSumary,
+      costBetRevenue: costBetRevenue ?? this.costBetRevenue,
+    );
+  }
+}
 
 class GameState {
   List<GameModel> listGameModel;
@@ -127,11 +181,13 @@ class AppState {
   final PlayerGameAddState playerGameAddState;
   final BetDetailState betDetailState;
   final GameState gameState;
+  final PaymentState paymentState;
   AppState(
       {required this.counterState,
       required this.userState,
       required this.playerState,
       required this.playerGameAddState,
       required this.betDetailState,
-      required this.gameState});
+      required this.gameState,
+      required this.paymentState});
 }

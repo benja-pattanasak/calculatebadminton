@@ -68,6 +68,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       settingModel.costShuttleCock =
                           int.parse(txtCostShuttleCockController.text);
                       if (list.length > 0) {
+                        settingModel.id = 1;
                         settingRepository.edit(settingModel);
                         Snackbar.show(context, 'แก้ไขข้อมูลเรียบร้อย');
                       } else {

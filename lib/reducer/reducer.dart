@@ -1,6 +1,25 @@
 import 'package:calculatebadminton/action/action.dart';
 import 'package:calculatebadminton/state/state.dart';
 
+PaymentState PaymentReducer(PaymentState state, dynamic action) {
+  if (action is PaymentChangeValue) {
+    return state.setValue(
+      paymentModel: action.paymentModel,
+      gameCount: action.gameCount,
+      payPlayerID: action.payPlayerID,
+      payPlayerName: action.payPlayName,
+      countShuttleCock: action.countShuttleCock,
+      costShuttleCock: action.costShuttleCock,
+      calculateCostShuttleCock: action.calculateCostShuttleCock,
+      costCort: action.costCort,
+      costSumary: action.costSumary,
+      costBetExpenses: action.costBetExpenses,
+      costBetRevenue: action.costBetRevenue,
+    );
+  }
+  return state;
+}
+
 GameState GameReducer(GameState state, dynamic action) {
   if (action is GameChangeValue) {
     return state.setValue(listGameModel: action.listGameModel);
@@ -103,5 +122,6 @@ AppState appReducer(AppState state, dynamic action) {
     playerGameAddState: PlayerGameAddReducer(state.playerGameAddState, action),
     betDetailState: BetDetailReducer(state.betDetailState, action),
     gameState: GameReducer(state.gameState, action),
+    paymentState: PaymentReducer(state.paymentState, action),
   );
 }

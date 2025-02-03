@@ -8,7 +8,6 @@ import 'package:calculatebadminton/screen/game_add_screen.dart';
 import 'package:calculatebadminton/screen/player_screen.dart';
 import 'package:calculatebadminton/state/state.dart';
 import 'package:calculatebadminton/viewmodel/gamescreen_viewmodel.dart';
-import 'package:calculatebadminton/widgets/leftnavigation.dart';
 import 'package:calculatebadminton/widgets/showalertbox.dart';
 import 'package:calculatebadminton/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
@@ -264,41 +263,39 @@ class _GameScreenState extends State<GameScreen> {
         "ใช้ลูกแบด " + gameModel.numberShuttleCock.toString() + " ลูก ",
         style: TextStyle(color: Colors.black)));
     listChildWidget.add(SizedBox(height: 10));
-    if (gameModel.typeCostShuttlecock == "1") {
-      if (gameID == gameID.toString()) {
-        if (gameModel.results == "1") {
-          listChildWidget.add(Text(
-              "ผลการแข่งขัน " + gameModel.team1Name.toString() + " แพ้",
-              style: TextStyle(color: Colors.black)));
-        } else if (gameModel.results == "2") {
-          listChildWidget.add(Text(
-              "ผลการแข่งขัน " + gameModel.team1Name.toString() + " ชนะ",
-              style: TextStyle(color: Colors.black)));
-        } else if (gameModel.results == "3") {
-          listChildWidget.add(Text(
-              "ผลการแข่งขัน " + gameModel.team1Name.toString() + " เสมอ",
-              style: TextStyle(color: Colors.black)));
-        } else {
-          listChildWidget.add(Text("ผลการแข่งขัน ยังไม่ได้ใส่ผลการแข่งขัน",
-              style: TextStyle(color: Colors.black)));
-        }
+    if (gameID == gameID.toString()) {
+      if (gameModel.results == "1") {
+        listChildWidget.add(Text(
+            "ผลการแข่งขัน " + gameModel.team1Name.toString() + " แพ้",
+            style: TextStyle(color: Colors.black)));
+      } else if (gameModel.results == "2") {
+        listChildWidget.add(Text(
+            "ผลการแข่งขัน " + gameModel.team1Name.toString() + " ชนะ",
+            style: TextStyle(color: Colors.black)));
+      } else if (gameModel.results == "3") {
+        listChildWidget.add(Text(
+            "ผลการแข่งขัน " + gameModel.team1Name.toString() + " เสมอ",
+            style: TextStyle(color: Colors.black)));
       } else {
-        if (gameModel.results == "1") {
-          listChildWidget.add(Text(
-              "ผลการแข่งขัน " + gameModel.team1Name.toString() + " แพ้",
-              style: TextStyle(color: Colors.black)));
-        } else if (gameModel.results == "2") {
-          listChildWidget.add(Text(
-              "ผลการแข่งขัน " + gameModel.team1Name.toString() + " ชนะ",
-              style: TextStyle(color: Colors.black)));
-        } else if (gameModel.results == "3") {
-          listChildWidget.add(Text(
-              "ผลการแข่งขัน " + gameModel.team1Name.toString() + " เสมอ",
-              style: TextStyle(color: Colors.black)));
-        } else {
-          listChildWidget.add(Text("ผลการแข่งขัน ยังไม่ได้ใส่ผลการแข่งขัน",
-              style: TextStyle(color: Colors.black)));
-        }
+        listChildWidget.add(Text("ผลการแข่งขัน ยังไม่ได้ใส่ผลการแข่งขัน",
+            style: TextStyle(color: Colors.black)));
+      }
+    } else {
+      if (gameModel.results == "1") {
+        listChildWidget.add(Text(
+            "ผลการแข่งขัน " + gameModel.team1Name.toString() + " แพ้",
+            style: TextStyle(color: Colors.black)));
+      } else if (gameModel.results == "2") {
+        listChildWidget.add(Text(
+            "ผลการแข่งขัน " + gameModel.team1Name.toString() + " ชนะ",
+            style: TextStyle(color: Colors.black)));
+      } else if (gameModel.results == "3") {
+        listChildWidget.add(Text(
+            "ผลการแข่งขัน " + gameModel.team1Name.toString() + " เสมอ",
+            style: TextStyle(color: Colors.black)));
+      } else {
+        listChildWidget.add(Text("ผลการแข่งขัน ยังไม่ได้ใส่ผลการแข่งขัน",
+            style: TextStyle(color: Colors.black)));
       }
     }
     bool isFirst = true;
@@ -393,7 +390,6 @@ class _GameScreenState extends State<GameScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: LeftNavigation(),
       appBar: AppBar(
         title: Text('รายการเกม', style: TextStyle(color: Colors.white)),
       ),

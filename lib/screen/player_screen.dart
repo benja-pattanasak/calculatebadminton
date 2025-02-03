@@ -60,7 +60,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
 
                     await _getListPlayer(context);
 
-                    Navigator.pop(context); // ปิด Dialog
+                    Navigator.pop(context);
                     Snackbar.show(context, "แก้ไขผู้เล่นเรียบร้อย");
                   },
                   child: Text('บันทึก'),
@@ -215,14 +215,12 @@ class _PlayerScreenState extends State<PlayerScreen> {
   Widget build(BuildContext context) {
     var contextBase = context;
     return Scaffold(
-      //drawer: LeftNavigation(),
       appBar: AppBar(
         title: Text('ผู้เล่น', style: TextStyle(color: Colors.white)),
       ),
       body: StoreConnector<AppState, PlayerViewmodel>(
         converter: (store) => PlayerViewmodel(
-            listPlayerModel:
-                store.state.playerState.listPlayerModel), // เชื่อม State
+            listPlayerModel: store.state.playerState.listPlayerModel),
         builder: (context, vm) {
           if (vm.listPlayerModel.length > 0) {
             return ListView.builder(

@@ -346,7 +346,7 @@ class _GameAddScreenState extends State<GameAddScreen> {
                             value: vm.playerID3 == ""
                                 ? null
                                 : vm.playerID3.toString(),
-                            hint: Text("เลือกผู้เล่นที่ 3"), // ข้อความเริ่มต้น
+                            hint: Text("เลือกผู้เล่นที่ 3"),
                             items: vm.listPlayerModel.map((PlayerModel item) {
                               return DropdownMenuItem<String>(
                                 value: item.id.toString(),
@@ -372,7 +372,7 @@ class _GameAddScreenState extends State<GameAddScreen> {
                             value: vm.playerID4 == ""
                                 ? null
                                 : vm.playerID4.toString(),
-                            hint: Text("เลือกผู้เล่นที่ 4"), // ข้อความเริ่มต้น
+                            hint: Text("เลือกผู้เล่นที่ 4"),
                             items: vm.listPlayerModel.map((PlayerModel item) {
                               return DropdownMenuItem<String>(
                                 value: item.id.toString(),
@@ -601,79 +601,85 @@ class _GameAddScreenState extends State<GameAddScreen> {
                             height: 20,
                             thickness: 2,
                           ),
-                          TextButton(
-                            style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all<Color>(Colors.blue),
-                              foregroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.white),
-                            ),
-                            onPressed: () async {
-                              List<Widget> listErrorWidget = _Validate(vm);
-                              if (listErrorWidget.length > 0) {
-                                ShowAlertBox().showErrorWithAddErrorWidgert(
-                                    context,
-                                    listErrorWidget,
-                                    "พบข้อผิดพลาดดังนี้");
-                              } else {
-                                GameRepository gameRepository =
-                                    GameRepository();
-                                GameModel gameModel = GameModel();
-                                gameModel.numberShuttleCock = 0;
-                                List<Map> maxIdMap =
-                                    await gameRepository.getMaxId();
-                                maxIdMap.forEach((game) {
-                                  gameModel.gameID = game['id'] == null
-                                      ? 1
-                                      : (game['id'] as int) + 1;
-                                });
-                                gameModel.numberShuttleCock = 1;
-                                gameModel.results = "0";
-                                gameModel.team1ID = vm.betTeam1ID;
-                                gameModel.team1Name = vm.betTeam1Name;
-                                gameModel.team2ID = vm.betTeam2ID;
-                                gameModel.team2Name = vm.betTeam2Name;
-                                gameModel.typeCostShuttlecock =
-                                    vm.costShuttlecock.toString();
-                                gameRepository.add(gameModel);
-                                BetDetailRepository betDetailRepository =
-                                    BetDetailRepository();
-                                vm.listBetDetailModel
-                                    .forEach((_betDetailModel) async {
-                                  BetDetailModel betDetailModel =
-                                      BetDetailModel();
-                                  maxIdMap =
-                                      await betDetailRepository.getMaxId();
-                                  maxIdMap.forEach((betDetail) {
-                                    betDetailModel.id = betDetail['id'] == null
+                          SizedBox(
+                            width: double.infinity,
+                            child: TextButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.blue),
+                                foregroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.white),
+                              ),
+                              onPressed: () async {
+                                List<Widget> listErrorWidget = _Validate(vm);
+                                if (listErrorWidget.length > 0) {
+                                  ShowAlertBox().showErrorWithAddErrorWidgert(
+                                      context,
+                                      listErrorWidget,
+                                      "พบข้อผิดพลาดดังนี้");
+                                } else {
+                                  GameRepository gameRepository =
+                                      GameRepository();
+                                  GameModel gameModel = GameModel();
+                                  gameModel.numberShuttleCock = 0;
+                                  List<Map> maxIdMap =
+                                      await gameRepository.getMaxId();
+                                  maxIdMap.forEach((game) {
+                                    gameModel.gameID = game['id'] == null
                                         ? 1
-                                        : (betDetail['id'] as int) + 1;
+                                        : (game['id'] as int) + 1;
                                   });
-                                  betDetailModel.betPlayerID =
-                                      _betDetailModel.betPlayerID;
-                                  betDetailModel.betPlayerName =
-                                      _betDetailModel.betPlayerName;
-                                  betDetailModel.betTeamID =
-                                      _betDetailModel.betTeamID;
-                                  betDetailModel.betTeamName =
-                                      _betDetailModel.betTeamName;
-                                  betDetailModel.betValue =
-                                      _betDetailModel.betValue;
-                                  betDetailModel.gameID =
-                                      gameModel.gameID as int;
-                                  betDetailRepository.add(betDetailModel);
-                                });
-                                vm.listBetDetailModel.clear();
-                                store.dispatch(BetDetailChangeValue(
-                                  listBetDetailModel: vm.listBetDetailModel,
-                                ));
-                                vm.listPlayerModel.clear();
+                                  gameModel.numberShuttleCock = 1;
+                                  gameModel.results = "0";
+                                  gameModel.team1ID = vm.betTeam1ID;
+                                  gameModel.team1Name = vm.betTeam1Name;
+                                  gameModel.team2ID = vm.betTeam2ID;
+                                  gameModel.team2Name = vm.betTeam2Name;
+                                  gameModel.typeCostShuttlecock =
+                                      vm.costShuttlecock.toString();
+                                  gameRepository.add(gameModel);
+                                  BetDetailRepository betDetailRepository =
+                                      BetDetailRepository();
+                                  vm.listBetDetailModel
+                                      .forEach((_betDetailModel) async {
+                                    BetDetailModel betDetailModel =
+                                        BetDetailModel();
+                                    maxIdMap =
+                                        await betDetailRepository.getMaxId();
+                                    maxIdMap.forEach((betDetail) {
+                                      betDetailModel.id =
+                                          betDetail['id'] == null
+                                              ? 1
+                                              : (betDetail['id'] as int) + 1;
+                                    });
+                                    betDetailModel.betPlayerID =
+                                        _betDetailModel.betPlayerID;
+                                    betDetailModel.betPlayerName =
+                                        _betDetailModel.betPlayerName;
+                                    betDetailModel.betTeamID =
+                                        _betDetailModel.betTeamID;
+                                    betDetailModel.betTeamName =
+                                        _betDetailModel.betTeamName;
+                                    betDetailModel.betValue =
+                                        _betDetailModel.betValue;
+                                    betDetailModel.gameID =
+                                        gameModel.gameID as int;
+                                    betDetailRepository.add(betDetailModel);
+                                  });
+                                  vm.listBetDetailModel.clear();
+                                  store.dispatch(BetDetailChangeValue(
+                                    listBetDetailModel: vm.listBetDetailModel,
+                                  ));
+                                  vm.listPlayerModel.clear();
 
-                                await _load();
-                                Navigator.pop(context);
-                              }
-                            },
-                            child: Text('เพิ่มเกม'),
+                                  await _load();
+                                  Navigator.pop(context);
+                                }
+                              },
+                              child: Text('เพิ่มเกม'),
+                            ),
                           )
                         ]);
                   } else {
