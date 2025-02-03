@@ -1,6 +1,7 @@
 import 'package:calculatebadminton/model/setting_model.dart';
 import 'package:calculatebadminton/repository/setting_repository.dart';
 import 'package:calculatebadminton/widgets/leftnavigation.dart';
+import 'package:calculatebadminton/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -68,22 +69,10 @@ class _SettingScreenState extends State<SettingScreen> {
                           int.parse(txtCostShuttleCockController.text);
                       if (list.length > 0) {
                         settingRepository.edit(settingModel);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('แก้ไขข้อมูลเรียบร้อย'),
-                            duration: Duration(
-                                seconds: 3), // ระยะเวลาในการแสดง SnackBar
-                          ),
-                        );
+                        Snackbar.show(context, 'แก้ไขข้อมูลเรียบร้อย');
                       } else {
                         settingRepository.add(settingModel);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('บันทึกข้อมูลเรียบร้อย'),
-                            duration: Duration(
-                                seconds: 3), // ระยะเวลาในการแสดง SnackBar
-                          ),
-                        );
+                        Snackbar.show(context, 'บันทึกข้อมูลเรียบร้อย');
                       }
                     },
                     child: Text('บันทึก'),

@@ -1,4 +1,5 @@
 import 'package:calculatebadminton/repository/game_repository.dart';
+import 'package:calculatebadminton/widgets/snackbar.dart';
 import 'package:flutter/material.dart';
 
 class EditplayresultScreen extends StatefulWidget {
@@ -32,13 +33,7 @@ class _EditplayresultScreenState extends State<EditplayresultScreen> {
                 GameRepository gameRepository = GameRepository();
                 gameRepository.editGameResult("1", int.parse(args['gameID']));
                 Navigator.pop(context, args['gameID'].toString() + ",1");
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('แก้ไขผลการแข่งขันเรียบร้อย'),
-                    duration:
-                        Duration(seconds: 3), // ระยะเวลาในการแสดง SnackBar
-                  ),
-                );
+                Snackbar.show(context, 'แก้ไขผลการแข่งขันเรียบร้อย');
               },
               child: Text('แพ้'),
             ),
@@ -52,13 +47,7 @@ class _EditplayresultScreenState extends State<EditplayresultScreen> {
                 GameRepository gameRepository = GameRepository();
                 gameRepository.editGameResult("2", int.parse(args['gameID']));
                 Navigator.pop(context, args['gameID'].toString() + ",2");
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('แก้ไขผลการแข่งขันเรียบร้อย'),
-                    duration:
-                        Duration(seconds: 3), // ระยะเวลาในการแสดง SnackBar
-                  ),
-                );
+                Snackbar.show(context, 'แก้ไขผลการแข่งขันเรียบร้อย');
               },
               child: Text('ชนะ'),
             ),
@@ -72,18 +61,11 @@ class _EditplayresultScreenState extends State<EditplayresultScreen> {
                 GameRepository gameRepository = GameRepository();
                 gameRepository.editGameResult("3", int.parse(args['gameID']));
                 Navigator.pop(context, args['gameID'].toString() + ",3");
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('แก้ไขผลการแข่งขันเรียบร้อย'),
-                    duration:
-                        Duration(seconds: 3), // ระยะเวลาในการแสดง SnackBar
-                  ),
-                );
+                Snackbar.show(context, 'แก้ไขผลการแข่งขันเรียบร้อย');
               },
               child: Text('เสมอ'),
             )
           ],
-          //children: listWidget,s
         )),
       ],
     ));

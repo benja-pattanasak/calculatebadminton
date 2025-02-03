@@ -60,7 +60,6 @@ class _CleardataScreenState extends State<CleardataScreen> {
         body: Padding(
             padding: const EdgeInsets.all(25),
             child: Form(
-              //key: _formKey,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               child: ListView(
                 children: [

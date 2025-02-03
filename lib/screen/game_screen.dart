@@ -30,6 +30,37 @@ class _GameScreenState extends State<GameScreen> {
     });
   }
 
+  _editResult(gameID, gameResultValue) async {
+    GameRepository gameRepository = GameRepository();
+    await gameRepository.editGameResult(gameResultValue, gameID);
+    Navigator.pop(context);
+
+    final store = StoreProvider.of<AppState>(context);
+    int index = store.state.gameState.listGameModel
+        .indexWhere((game) => game.gameID == gameID);
+
+    if (index != -1) {
+      store.state.gameState.listGameModel[index].results = gameResultValue;
+    }
+    store.dispatch(
+        GameChangeValue(listGameModel: store.state.gameState.listGameModel));
+  }
+
+  _editShuttleCock(gameID, numberShuttleCock) async {
+    GameRepository gameRepository = GameRepository();
+    await gameRepository.editShuttleCock(gameID, numberShuttleCock);
+    final store = StoreProvider.of<AppState>(context);
+    int index = store.state.gameState.listGameModel
+        .indexWhere((game) => game.gameID == gameID);
+
+    if (index != -1) {
+      store.state.gameState.listGameModel[index].numberShuttleCock =
+          numberShuttleCock;
+    }
+    store.dispatch(
+        GameChangeValue(listGameModel: store.state.gameState.listGameModel));
+  }
+
   _editPlayResult(int gameID) {
     return showDialog(
         context: context,
@@ -55,17 +86,8 @@ class _GameScreenState extends State<GameScreen> {
                               MaterialStateProperty.all<Color>(Colors.white),
                         ),
                         onPressed: () async {
-                          GameRepository gameRepository = GameRepository();
-                          await gameRepository.editGameResult("1", gameID);
-                          Navigator.pop(context);
-
-                          //final store = StoreProvider.of<AppState>(context);
-                          //store.dispatch(GameChangeValue(ga));
-                          // setState(() {
-                          //   gameResult = "1";
-                          // });
-                          // _getListBetDetail();
-                          // _getListGame();
+                          await _editResult(gameID, "1");
+                          await _load();
                         },
                         child: Text('แพ้'),
                       ),
@@ -78,15 +100,8 @@ class _GameScreenState extends State<GameScreen> {
                               MaterialStateProperty.all<Color>(Colors.white),
                         ),
                         onPressed: () async {
-                          // GameService gameService = GameService();
-                          // await gameService.editGameResult("2", gameID);
-                          // Navigator.pop(context);
-                          // listGame.clear();
-                          // setState(() {
-                          //   gameResult = "2";
-                          // });
-                          // _getListBetDetail();
-                          // _getListGame();
+                          await _editResult(gameID, "2");
+                          await _load();
                         },
                         child: Text('ชนะ'),
                       ),
@@ -99,20 +114,12 @@ class _GameScreenState extends State<GameScreen> {
                               MaterialStateProperty.all<Color>(Colors.white),
                         ),
                         onPressed: () async {
-                          // GameService gameService = GameService();
-                          // await gameService.editGameResult("3", gameID);
-                          // Navigator.pop(context);
-                          // listGame.clear();
-                          // setState(() {
-                          //   gameResult = "3";
-                          // });
-                          // _getListBetDetail();
-                          // _getListGame();
+                          await _editResult(gameID, "3");
+                          await _load();
                         },
                         child: Text('เสมอ'),
                       )
                     ],
-                    //children: listWidget,s
                   )),
                 ],
               )
@@ -167,12 +174,63 @@ class _GameScreenState extends State<GameScreen> {
         });
   }
 
+  _editShuttlecockFormDialog(
+      BuildContext context, gameID, GameModel gameModel) {
+    return showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (param) {
+          return AlertDialog(
+            actionsAlignment: MainAxisAlignment.center,
+            actions: [
+              Column(children: [
+                SizedBox(
+                  height: 20,
+                ),
+                TextButton(
+                    onPressed: () async {
+                      _editShuttleCock(
+                          gameID, (gameModel.numberShuttleCock as int) + 1);
+                      Navigator.pop(context);
+                      await _load();
+                    },
+                    child: Text('เพิ่มลูกแบด'),
+                    style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all(Colors.white),
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.green))),
+                TextButton(
+                    onPressed: () async {
+                      if (gameModel.numberShuttleCock == 1) {
+                        Navigator.pop(context);
+                        String errorMessage =
+                            "ไม่สามารถลดลูกแบดได้น้อยกว่า 1 ลูก";
+                        ShowAlertBox showAlertBox = ShowAlertBox();
+                        return showAlertBox.showError(context, errorMessage);
+                      } else {
+                        _editShuttleCock(
+                            gameID, (gameModel.numberShuttleCock as int) - 1);
+                      }
+                      Navigator.pop(context);
+                      await _load();
+                    },
+                    child: Text('ลดลูกแบด'),
+                    style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all(Colors.white),
+                        backgroundColor: MaterialStateProperty.all(Colors.red)))
+              ]),
+            ],
+          );
+        });
+  }
+
   List<Widget> _showListBetDetail(int gameID, GameModel gameModel, int index,
       BuildContext buildContext, GameViewmodel vm) {
     var listWidget = <Widget>[];
     var listChildWidget = <Widget>[];
 
-    //String strGameDetail = "";
     String typeCostShuttlecock = "";
     if (gameModel.typeCostShuttlecock == "1") {
       typeCostShuttlecock = "แพ้จ่าย";
@@ -202,56 +260,47 @@ class _GameScreenState extends State<GameScreen> {
     listChildWidget.add(Text("ค่าลูก " + typeCostShuttlecock,
         style: TextStyle(color: Colors.black)));
     listChildWidget.add(SizedBox(height: 3));
-    // if (numberShuttleCock == null) {
-    //   List<String> listUpdateRowNumber = updateRowNumber.toString().split(',');
-    //   if (listUpdateRowNumber[0].toString() == gameID.toString()) {
-    //     listChildWidget.add(Text(
-    //         "ใช้ลูกแบด " + listUpdateRowNumber[1].toString() + " ลูก ",
-    //         style: TextStyle(color: Colors.black)));
-    //   } else {
     listChildWidget.add(Text(
         "ใช้ลูกแบด " + gameModel.numberShuttleCock.toString() + " ลูก ",
         style: TextStyle(color: Colors.black)));
-    //   }
-    // }
     listChildWidget.add(SizedBox(height: 10));
-    // if (gameModel.typeCostShuttlecock == "1") {
-    //   if (gameID == gameID.toString()) {
-    //     if (gameResult == "1") {
-    //       listChildWidget.add(Text(
-    //           "ผลการแข่งขัน " + gameModel.team1Name + " แพ้",
-    //           style: TextStyle(color: Colors.black)));
-    //     } else if (gameResult == "2") {
-    //       listChildWidget.add(Text(
-    //           "ผลการแข่งขัน " + gameModel.team1Name + " ชนะ",
-    //           style: TextStyle(color: Colors.black)));
-    //     } else if (gameResult == "3") {
-    //       listChildWidget.add(Text(
-    //           "ผลการแข่งขัน " + gameModel.team1Name + " เสมอ",
-    //           style: TextStyle(color: Colors.black)));
-    //     } else {
-    //       listChildWidget.add(Text("ผลการแข่งขัน ยังไม่ได้ใส่ผลการแข่งขัน",
-    //           style: TextStyle(color: Colors.black)));
-    //     }
-    //   } else {
-    //     if (gameModel.results == "1") {
-    //       listChildWidget.add(Text(
-    //           "ผลการแข่งขัน " + gameModel.team1Name + " แพ้",
-    //           style: TextStyle(color: Colors.black)));
-    //     } else if (gameModel.results == "2") {
-    //       listChildWidget.add(Text(
-    //           "ผลการแข่งขัน " + gameModel.team1Name + " ชนะ",
-    //           style: TextStyle(color: Colors.black)));
-    //     } else if (gameModel.results == "3") {
-    //       listChildWidget.add(Text(
-    //           "ผลการแข่งขัน " + gameModel.team1Name + " เสมอ",
-    //           style: TextStyle(color: Colors.black)));
-    //     } else {
-    //       listChildWidget.add(Text("ผลการแข่งขัน ยังไม่ได้ใส่ผลการแข่งขัน",
-    //           style: TextStyle(color: Colors.black)));
-    //     }
-    //   }
-    // }
+    if (gameModel.typeCostShuttlecock == "1") {
+      if (gameID == gameID.toString()) {
+        if (gameModel.results == "1") {
+          listChildWidget.add(Text(
+              "ผลการแข่งขัน " + gameModel.team1Name.toString() + " แพ้",
+              style: TextStyle(color: Colors.black)));
+        } else if (gameModel.results == "2") {
+          listChildWidget.add(Text(
+              "ผลการแข่งขัน " + gameModel.team1Name.toString() + " ชนะ",
+              style: TextStyle(color: Colors.black)));
+        } else if (gameModel.results == "3") {
+          listChildWidget.add(Text(
+              "ผลการแข่งขัน " + gameModel.team1Name.toString() + " เสมอ",
+              style: TextStyle(color: Colors.black)));
+        } else {
+          listChildWidget.add(Text("ผลการแข่งขัน ยังไม่ได้ใส่ผลการแข่งขัน",
+              style: TextStyle(color: Colors.black)));
+        }
+      } else {
+        if (gameModel.results == "1") {
+          listChildWidget.add(Text(
+              "ผลการแข่งขัน " + gameModel.team1Name.toString() + " แพ้",
+              style: TextStyle(color: Colors.black)));
+        } else if (gameModel.results == "2") {
+          listChildWidget.add(Text(
+              "ผลการแข่งขัน " + gameModel.team1Name.toString() + " ชนะ",
+              style: TextStyle(color: Colors.black)));
+        } else if (gameModel.results == "3") {
+          listChildWidget.add(Text(
+              "ผลการแข่งขัน " + gameModel.team1Name.toString() + " เสมอ",
+              style: TextStyle(color: Colors.black)));
+        } else {
+          listChildWidget.add(Text("ผลการแข่งขัน ยังไม่ได้ใส่ผลการแข่งขัน",
+              style: TextStyle(color: Colors.black)));
+        }
+      }
+    }
     bool isFirst = true;
     for (int i = 0; i < vm.listBetDetailModel.length; i++) {
       if (gameID == vm.listBetDetailModel[i].gameID) {
@@ -279,127 +328,46 @@ class _GameScreenState extends State<GameScreen> {
       }
     }
     listChildWidget.add(SizedBox(height: 10));
-    //String strListBetDetail = "";
-    //if (gameID == gameID.toString()) {
-
-    //}
-    // if (listBetDetailModel.length > 0) {
-    if (gameModel.typeCostShuttlecock == "1") {
-      listChildWidget.add(Row(
-        children: [
-          TextButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-            ),
-            onPressed: () async {
-              // Map<String, dynamic> args = {"gameID": gameID.toString()};
-              // String returnNumberShutterCock = await Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     settings:
-              //         RouteSettings(arguments: args // ส่งค่าไปใน  arguments
-              //             ),
-              //     builder: (context) => EditShuttlecockScreen(),
-              //  ),
-              //);
-              //setState(() {
-              //  updateRowNumber = returnNumberShutterCock;
-              //});
-              //_editShuttlecockFormDialog(context, gameID);
-            },
-            child: Text('ลูกแบด'),
+    listChildWidget.add(Row(
+      children: [
+        TextButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
           ),
-          SizedBox(
-            width: 5,
+          onPressed: () async {
+            _editShuttlecockFormDialog(context, gameID, gameModel);
+          },
+          child: Text('ลูกแบด'),
+        ),
+        SizedBox(
+          width: 5,
+        ),
+        TextButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
           ),
-          TextButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-            ),
-            onPressed: () async {
-              // Map<String, dynamic> args = {"gameID": gameID.toString()};
-              // String returnPlayResult = await Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     settings:
-              //         RouteSettings(arguments: args // ส่งค่าไปใน  arguments
-              //             ),
-              //     builder: (context) => EditPlayResultScreen(),
-              //   ),
-              // );
-              // setState(() {
-              //   updateRowNumber = returnPlayResult;
-              // });
-              //jay
-              // _editPlayResult(
-              //   context,
-              // );
-              _editPlayResult(gameID);
-            },
-            child: Text('ผลการแข่งขัน'),
+          onPressed: () async {
+            _editPlayResult(gameID);
+          },
+          child: Text('ผลการแข่งขัน'),
+        ),
+        SizedBox(
+          width: 5,
+        ),
+        TextButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
           ),
-          SizedBox(
-            width: 5,
-          ),
-          TextButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-            ),
-            onPressed: () {
-              _deleteFormDialog(context, gameID);
-            },
-            child: Text('ลบข้อมูลนี้'),
-          )
-        ],
-      ));
-    } else {
-      listChildWidget.add(Row(
-        children: [
-          TextButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-            ),
-            onPressed: () async {
-              // Map<String, dynamic> args = {"gameID": gameID.toString()};
-              // String returnNumberShutterCock = await Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     settings:
-              //         RouteSettings(arguments: args // ส่งค่าไปใน  arguments
-              //             ),
-              //     builder: (context) => EditShuttlecockScreen(),
-              //   ),
-              // );
-              // setState(() {
-              //   updateRowNumber = returnNumberShutterCock;
-              // });
-              //_editShuttlecockFormDialog(context, gameID);
-            },
-            child: Text('ลูกแบด'),
-          ),
-          SizedBox(
-            width: 5,
-          ),
-          SizedBox(
-            width: 5,
-          ),
-          TextButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-            ),
-            onPressed: () {
-              _deleteFormDialog(context, gameID);
-            },
-            child: Text('ลบข้อมูลนี้'),
-          )
-        ],
-      ));
-    }
+          onPressed: () {
+            _deleteFormDialog(context, gameID);
+          },
+          child: Text('ลบข้อมูลนี้'),
+        )
+      ],
+    ));
     listWidget.add(Container(
         width: 400,
         child: Padding(
